@@ -6,7 +6,12 @@ package grupo8.proyectofifa;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -21,6 +26,24 @@ public class VentanaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        Principal.cargarimagen (ivinicio,Principal.pathImg+"fifaBrasil.jpg", 400, 258, false, false);
+        Principal.cargarimagen (ivcopa,Principal.pathImg+"Brazil2014.png", 88, 100, false, false);
+        labeltitulo.setId("texto-titulo");
+    }  
+    
+    @FXML
+    private AnchorPane root;
+    
+    @FXML
+    private ImageView ivinicio;
+    
+    @FXML
+    private ImageView ivcopa;
+    
+    @FXML
+    private Label labeltitulo;
+    
+    @FXML
+    private Button btncopas;    
     
 }
