@@ -1,0 +1,31 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 19 ago. 2022, 16:36:16
+    Author     : laque
+*/
+
+.root {
+     -fx-background-color: #FFFFD8;
+}
+
+#texto-titulo{
+    -fx-font-size: 24px;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: linear-gradient(#5EB200, #007423);
+}
+
+#labeltitulo{
+    -fx-font-size: 24px;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: linear-gradient(#5EB200, #007423);
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#002FB6, #001E74);
+}

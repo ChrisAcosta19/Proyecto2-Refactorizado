@@ -39,6 +39,7 @@ public class Principal extends Application{
         FXMLLoader fxmlloader = new FXMLLoader(Principal.class.getResource("ventana.fxml"));
         Parent root = fxmlloader.load();
         scene = new Scene(root);
+        scene.getStylesheets().add(Principal.class.getResource("Login.css").toExternalForm());
         s.setScene(scene);
         s.show();
         s.setTitle("Copa mundial de la FIFA Brasil 2014");
