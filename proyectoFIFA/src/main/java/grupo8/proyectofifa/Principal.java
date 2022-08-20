@@ -22,8 +22,8 @@ public class Principal extends Application{
     public static Scene scene;
     public static String pathImg = "src/main/resources/image/";
     
-        /* metodo para cargar imagen en un imageview, recibe la variable imageview, la ruta donde se encuentra la imagen, el
-       ancho y alto de la imagen, y dos valores booleanos para saber si se desea ajustar el ancho o alto de la imagen*/
+    /* metodo para cargar imagen en un imageview, recibe la variable imageview, la ruta donde se encuentra la imagen, el
+    ancho y alto de la imagen, y dos valores booleanos para saber si se desea ajustar el ancho o alto de la imagen*/
     public static void cargarimagen (ImageView iv, String direccion, double width, double height, boolean bln0, boolean bln1){
         try(FileInputStream input = new FileInputStream(direccion)){
             Image image = new Image(input, width, height, bln0, bln1);
@@ -32,6 +32,18 @@ public class Principal extends Application{
         }catch(IOException ioe){
             System.out.println("No se puede cargar imagen");
         }
+    }
+    
+    // metodo estatico para crear una nueva pestaña con el nombre del archivo fxml y el titulo de la pestaña
+    public static void cargarVentana(String nombreArchivo, String nombreVentana) throws IOException{
+        Stage s = new Stage();
+        FXMLLoader fxmlloader = new FXMLLoader(Principal.class.getResource(nombreArchivo));
+        Parent root = fxmlloader.load();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Principal.class.getResource("Login.css").toExternalForm());
+        s.setScene(scene);
+        s.show();
+        s.setTitle(nombreVentana);
     }
     
     @Override

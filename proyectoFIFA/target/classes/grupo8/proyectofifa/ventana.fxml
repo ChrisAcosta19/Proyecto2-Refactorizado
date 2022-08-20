@@ -8,7 +8,7 @@
 <AnchorPane id="AnchorPane" fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo8.proyectofifa.VentanaController">
    <children>
       <Button layoutX="99.0" layoutY="343.0" mnemonicParsing="false" text="Consulta de partidos" />
-      <Button fx:id="btncopas" layoutX="291.0" layoutY="343.0" mnemonicParsing="false" text="Consulta de copas mundiales" />
+      <Button fx:id="btncopas" layoutX="291.0" layoutY="343.0" mnemonicParsing="false" onMouseClicked="#abrircopas" text="Consulta de copas mundiales" />
       <Label fx:id="labeltitulo" layoutX="37.0" layoutY="23.0" text="Copa Mundial de la FIFA Brasil 2014" />
       <ImageView fx:id="ivinicio" fitHeight="258.0" fitWidth="400.0" layoutX="91.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="ivcopa" fitHeight="100.0" fitWidth="88.0" layoutX="512.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />

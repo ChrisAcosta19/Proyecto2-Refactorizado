@@ -4,6 +4,7 @@
  */
 package grupo8.proyectofifa;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -46,4 +48,13 @@ public class VentanaController implements Initializable {
     @FXML
     private Button btncopas;    
     
+    // metodo que permite abrir la ventana consultaPartido cuando se da click en el boton
+    @FXML
+    public void abrircopas(MouseEvent e){
+        try{
+            Principal.cargarVentana("consultaPartido.fxml", "Ventana de consulta de partidos");
+        }catch(IOException ioe){
+            System.out.println("No se pudo cargar ventana");
+        }
+    }
 }
