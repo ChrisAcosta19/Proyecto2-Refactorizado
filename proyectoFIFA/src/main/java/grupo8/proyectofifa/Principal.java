@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 public class Principal extends Application{
     public static Scene scene;
     public static String pathImg = "src/main/resources/image/";
+    public static String pathArc = "src/main/resources/archivos/";
     
     /* metodo para cargar imagen en un imageview, recibe la variable imageview, la ruta donde se encuentra la imagen, el
     ancho y alto de la imagen, y dos valores booleanos para saber si se desea ajustar el ancho o alto de la imagen*/
@@ -34,7 +35,7 @@ public class Principal extends Application{
         }
     }
     
-    // metodo estatico para crear una nueva pestaña con el nombre del archivo fxml y el titulo de la pestaña
+    //metodo estatico para crear una nueva pestaña con el nombre del archivo fxml y el titulo de la pestaña
     public static void cargarVentana(String nombreArchivo, String nombreVentana) throws IOException{
         Stage s = new Stage();
         FXMLLoader fxmlloader = new FXMLLoader(Principal.class.getResource(nombreArchivo));

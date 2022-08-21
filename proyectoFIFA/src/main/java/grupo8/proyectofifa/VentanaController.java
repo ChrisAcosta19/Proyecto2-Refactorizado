@@ -48,9 +48,14 @@ public class VentanaController implements Initializable {
     @FXML
     private Button btncopas;    
     
-    // metodo que permite abrir la ventana consultaPartido cuando se da click en el boton
+    //metodo que permite abrir la ventana consultaPartido cuando se da click en el boton de consulta de copas mundiales.
     @FXML
     public void abrircopas(MouseEvent e){
+        //agregar codigo para conectar con la otra ventana
+    }
+    
+    @FXML
+    public void abrirpartido(MouseEvent e){
         try{
             Principal.cargarVentana("consultaPartido.fxml", "Ventana de consulta de partidos");
         }catch(IOException ioe){
