@@ -68,7 +68,39 @@ public class ConsultaPartidoController implements Initializable {
         ArrayList<String> equipos1 = new ArrayList<>();
         ArrayList<String> equipos2 = new ArrayList<>();
         
-        if (cbfase.getValue() != "Grupos"){
+        if (cbfase.getValue() == "Grupos"){
+            ComboBox cbgrupo = new ComboBox();
+            cbgrupo.getItems().addAll("A", "B", "C", "D", "E", "F", "G", "H");
+            
+            ComboBox cbequipo1 = new ComboBox();
+            ComboBox cbequipo2 = new ComboBox();
+            cbgrupo.setOnAction(g->cargarCB((String) cbgrupo.getValue(), cbequipo1, cbequipo2));
+            
+            hbox1.getChildren().addAll(new Label("Fase: "), cbfase, new Label("                "), new Label("Grupo: "), cbgrupo);
+            hbox1.setSpacing(10);
+            hbox1.setAlignment(Pos.CENTER);
+            hbox1.setPadding(new Insets(20, 10, 20, 10));
+            vbox0.getChildren().add(hbox1);
+            
+            hbox2.getChildren().addAll(new Label("Equipo 1: "), cbequipo1, new Label("               vs               ") ,new Label("Equipo 2: "), cbequipo2);
+            hbox2.setSpacing(10);
+            hbox2.setAlignment(Pos.CENTER);
+            hbox2.setPadding(new Insets(0, 10, 20, 10));
+            vbox0.getChildren().add(hbox2);
+            
+            Button btnconslutar = new Button("Consultar");
+            Label resultadoPartido = new Label("");
+            VBox vbox1 = new VBox();
+            HBox hboxmini = new HBox();
+            VBox vboxmini = new VBox();
+            btnconslutar.setOnMouseClicked((MouseEvent e1) -> {
+                eventoConsultar((String) cbgrupo.getValue(), (String) cbequipo1.getValue(), (String) cbequipo2.getValue(), vbox1, hboxmini, vboxmini, resultadoPartido, vbox0);
+            });
+            vbox0.getChildren().addAll(btnconslutar);
+            vbox0.setAlignment(Pos.CENTER);
+            vbox0.getChildren().addAll(resultadoPartido);
+            
+        }else{
             String linea;
             String[] contenido;
             try (BufferedReader lector = new BufferedReader(new FileReader(Principal.pathArc+"WorldCupMatchesBrasil2014.csv"))) {
@@ -90,51 +122,25 @@ public class ConsultaPartidoController implements Initializable {
             vbox0.getChildren().addAll(new Label("Los equipos que llegaron a esta fase fueron:"));
             vbox0.setAlignment(Pos.CENTER);
             vbox0.setSpacing(10);
-        }
-        
-        if (cbfase.getValue() == "Grupos"){
-            ComboBox cbgrupo = new ComboBox();
-            cbgrupo.getItems().addAll("A", "B", "C", "D", "E", "F", "G", "H");
             
-            ComboBox cbequipo1 = new ComboBox();
-            ComboBox cbequipo2 = new ComboBox();
-            cbgrupo.setOnAction(g->cargarCB((String) cbgrupo.getValue(), cbequipo1, cbequipo2));
+            String ronda = "";
+            switch(""+cbfase.getValue()){
+                case"Ronda de 16":
+                    ronda = "Round of 16";
+                    break;
+                case"Cuartos de Final":
+                    ronda = "Quarter-finals";
+                    break;
+                case"Semifinal":
+                    ronda = "Semi-finals";
+                    break;
+                case"Final":
+                    ronda = "Final";
+                    break;
+            }
             
-            hbox1.getChildren().addAll(new Label("Fase: "), cbfase, new Label("        "
-                    + "        "), new Label("Grupo: "), cbgrupo);
-            hbox1.setSpacing(10);
-            hbox1.setAlignment(Pos.CENTER);
-            hbox1.setPadding(new Insets(20, 10, 20, 10));
-            vbox0.getChildren().add(hbox1);
-            
-            hbox2.getChildren().addAll(new Label("Equipo 1: "), cbequipo1, new Label("               "
-                    + "vs               ") ,new Label("Equipo 2: "), cbequipo2);
-            hbox2.setSpacing(10);
-            hbox2.setAlignment(Pos.CENTER);
-            hbox2.setPadding(new Insets(0, 10, 20, 10));
-            
-            vbox0.getChildren().add(hbox2);
-            Button btnconslutar = new Button("Consultar");
-            Label resultadoPartido = new Label("");
-            VBox vbox1 = new VBox();
-            HBox hboxmini = new HBox();
-            VBox vboxmini = new VBox();
-            btnconslutar.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                
-                @Override
-                public void handle(MouseEvent e){
-                    eventoConsultar((String) cbgrupo.getValue(), (String) cbequipo1.getValue(), (String) cbequipo2.getValue(), vbox1, hboxmini, vboxmini, resultadoPartido, vbox0);
-              
-                }
-          
-            });
-            vbox0.getChildren().addAll(btnconslutar);
-            vbox0.setAlignment(Pos.CENTER);
-            vbox0.getChildren().addAll(resultadoPartido);
-            
-        }else if(cbfase.getValue() == "Ronda de 16"){
             for(String fase: listafase){
-                completarLista(fase, "Round of 16", equiposSR, equipos1, equipos2, i);
+                completarLista(fase, ronda, equiposSR, equipos1, equipos2, i);
                 i += 1;
             }
             Collections.sort(equiposSR);
@@ -148,98 +154,14 @@ public class ConsultaPartidoController implements Initializable {
 
             hbox2.setAlignment(Pos.CENTER);
             vbox0.getChildren().add(hbox2);
-            
-        }else if(cbfase.getValue() == "Cuartos de Final"){
-            for(String fase: listafase){
-                completarLista(fase, "Quarter-finals", equiposSR, equipos1, equipos2, i);
-                i += 1;
-            }
-            Collections.sort(equiposSR);
-            for (int j = 0; j <equiposSR.size(); j++){
-                if(j != equiposSR.size()-1){
-                    hbox2.getChildren().addAll(new Label(equiposSR.get(j)+ ", "));
-                }else{
-                    hbox2.getChildren().addAll(new Label(equiposSR.get(j)));
-                }
-            }
-
-            hbox2.setAlignment(Pos.CENTER);
-            vbox0.getChildren().add(hbox2);
-            
-        }else if(cbfase.getValue() == "Semifinal"){
-            for(String fase: listafase){
-                completarLista(fase, "Semi-finals", equiposSR, equipos1, equipos2, i);
-                i += 1;
-            }
-            Collections.sort(equiposSR);
-            for (int j = 0; j <equiposSR.size(); j++){
-                if(j != equiposSR.size()-1){
-                    hbox2.getChildren().addAll(new Label(equiposSR.get(j)+ ", "));
-                }else{
-                    hbox2.getChildren().addAll(new Label(equiposSR.get(j)));
-                }
-            }
-
-            hbox2.setAlignment(Pos.CENTER);
-            vbox0.getChildren().add(hbox2);
-            
-        }else if(cbfase.getValue() == "Final"){
-            for(String fase: listafase){
-                completarLista(fase, "Final", equiposSR, equipos1, equipos2, i);
-                i += 1;
-            }
-            Collections.sort(equiposSR);
-            for (int j = 0; j <equiposSR.size(); j++){
-                if(j != equiposSR.size()-1){
-                    hbox2.getChildren().addAll(new Label(equiposSR.get(j)+ ", "));
-                }else{
-                    hbox2.getChildren().addAll(new Label(equiposSR.get(j)));
-                }
-            }
-
-            hbox2.setAlignment(Pos.CENTER);
-            vbox0.getChildren().add(hbox2);
-            
         }
         
         root.getChildren().add(vbox0);
     }
     
     public void cargarCB(String valorSelecionado, ComboBox cbequipo1, ComboBox cbequipo2){
-        switch(valorSelecionado){
-            case "A":
-                cargarEquipos("Group A", cbequipo1, 2, 5);
-                cargarEquipos("Group A", cbequipo2, 2, 8);
-                break;
-            case "B":
-                cargarEquipos("Group B", cbequipo1, 2, 5);
-                cargarEquipos("Group B", cbequipo2, 2, 8);
-                break;
-            case "C":
-                cargarEquipos("Group C", cbequipo1, 2, 5);
-                cargarEquipos("Group C", cbequipo2, 2, 8);
-                break;
-            case "D":
-                cargarEquipos("Group D", cbequipo1, 2, 5);
-                cargarEquipos("Group D", cbequipo2, 2, 8);
-                break;
-            case "E":
-                cargarEquipos("Group E", cbequipo1, 2, 5);
-                cargarEquipos("Group E", cbequipo2, 2, 8);
-                break;
-            case "F":
-                cargarEquipos("Group F", cbequipo1, 2, 5);
-                cargarEquipos("Group F", cbequipo2, 2, 8);
-                break;
-            case "G":
-                cargarEquipos("Group G", cbequipo1, 2, 5);
-                cargarEquipos("Group G", cbequipo2, 2, 8);
-                break;
-            case "H":
-                cargarEquipos("Group H", cbequipo1, 2, 5);
-                cargarEquipos("Group H", cbequipo2, 2, 8);
-                break;
-        }
+        cargarEquipos("Group "+valorSelecionado, cbequipo1, 2, 5);
+        cargarEquipos("Group "+valorSelecionado, cbequipo2, 2, 8);
         
     }
     
@@ -266,16 +188,11 @@ public class ConsultaPartidoController implements Initializable {
     }
     
     public void completarLista(String fase, String faseEscogida, ArrayList<String> equiposSR, ArrayList<String> equipos1, ArrayList<String> equipos2, int i){
-        boolean condicion1;
-        boolean condicion2;
-        
-        condicion1 = !equiposSR.contains(equipos1.get(i));
-        condicion2 = !equiposSR.contains(equipos2.get(i));
-        if(fase.equals(faseEscogida) && condicion1){
+        if(fase.equals(faseEscogida) && !equiposSR.contains(equipos1.get(i))){
             equiposSR.add(equipos1.get(i));
         }
         
-        if(fase.equals(faseEscogida) && condicion2){
+        if(fase.equals(faseEscogida) && !equiposSR.contains(equipos2.get(i))){
             equiposSR.add(equipos2.get(i));
         }
     }
@@ -337,7 +254,7 @@ public class ConsultaPartidoController implements Initializable {
         }
     }
     
-    public String diaPartido(String numDia){
+    public String diaPartido(String numDia){            
         switch (numDia) {
             case "16":
             case "23":
