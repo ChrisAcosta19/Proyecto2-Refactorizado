@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 public class Principal extends Application{
     public static Scene scene;
     public static String pathImg = "src/main/resources/image/";
+    public static String pathBandera = "src/main/resources/banderas/";
     public static String pathArc = "src/main/resources/archivos/";
     
     /* metodo para cargar imagen en un imageview, recibe la variable imageview, la ruta donde se encuentra la imagen, el

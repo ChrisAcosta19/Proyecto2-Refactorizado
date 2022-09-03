@@ -17,10 +17,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-text-fill: linear-gradient(#5EB200, #007423);
 }
 
-#labeltitulo{
-    -fx-font-size: 24px;
-    -fx-font-family: "Arial Black";
-    -fx-text-fill: linear-gradient(#5EB200, #007423);
+.label{
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial";
 }
 
 .button {

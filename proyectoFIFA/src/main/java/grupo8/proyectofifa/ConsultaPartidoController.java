@@ -20,6 +20,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,7 +38,7 @@ public class ConsultaPartidoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        labeltitulo.setId("labeltitulo");
+        labeltitulo.setId("texto-titulo");
         cbfase.getItems().addAll("Grupos", "Ronda de 16", "Cuartos de Final", "Semifinal","Final");
     }    
     
@@ -211,7 +212,7 @@ public class ConsultaPartidoController implements Initializable {
             if(cbequipo1.equals(cbequipo2)){
                 resultadoPartido.setText("Para cargar los resultados los dos equipos tienen que ser diferentes");
             }else{
-                
+                ArrayList<String> orden = new ArrayList<>();
                 String linea;
                 String[] contenido;
                 Label dia = new Label();
@@ -219,16 +220,16 @@ public class ConsultaPartidoController implements Initializable {
                 lector.readLine();
                 while((linea = lector.readLine())!= null){
                     contenido = linea.split("\\|");
-                    if(contenido[2].equals("Group "+grupo) && cbequipo1.equals(contenido[5]) && cbequipo2.equals(contenido[8])){
-                        vboxmini.getChildren().addAll(new Label(contenido[1]), new Label(contenido[3]), new Label(contenido[4]));
-                        hboxmini.getChildren().addAll(vboxmini, new Label(cbequipo1), new Label("Final del partido: " + contenido[6] + " - " + contenido[7]), new Label(cbequipo2));
-                        hboxmini.setSpacing(10);
-                        hboxmini.setAlignment(Pos.CENTER);
-                        dia.setText(diaPartido(contenido[1].split(" ")[0]));
-                    }
-                    if(contenido[2].equals("Group "+grupo) && cbequipo1.equals(contenido[8]) && cbequipo2.equals(contenido[5])){
-                        vboxmini.getChildren().addAll(new Label(contenido[1]), new Label(contenido[3]), new Label(contenido[4]));
-                        hboxmini.getChildren().addAll(vboxmini, new Label(cbequipo1), new Label("Final del partido: " + contenido[6] + " - " + contenido[7]), new Label(cbequipo2));
+                    if((contenido[2].equals("Group "+grupo) && cbequipo1.equals(contenido[5]) && cbequipo2.equals(contenido[8]))||(contenido[2].equals("Group "+grupo) && cbequipo1.equals(contenido[8]) && cbequipo2.equals(contenido[5]))){
+                        orden.add(contenido[5]);
+                        orden.add(contenido[8]);
+                        Collections.sort(orden);
+                        ImageView bandera1 = new ImageView();
+                        ImageView bandera2 = new ImageView();
+                        Principal.cargarimagen (bandera1, Principal.pathBandera+orden.get(0)+".png", 100, 65, false, false);
+                        Principal.cargarimagen (bandera2, Principal.pathBandera+orden.get(1)+".png", 100, 65, false, false);
+                        vboxmini.getChildren().addAll(new Label(contenido[1]), new Label("GRUPO "+grupo), new Label(contenido[3]), new Label(contenido[4]));
+                        hboxmini.getChildren().addAll(vboxmini, bandera1, new Label(orden.get(0)), new Label("  Final del partido:  \n           " + contenido[6] + " - " + contenido[7]), new Label(orden.get(1)), bandera2);
                         hboxmini.setSpacing(10);
                         hboxmini.setAlignment(Pos.CENTER);
                         dia.setText(diaPartido(contenido[1].split(" ")[0]));
@@ -241,10 +242,8 @@ public class ConsultaPartidoController implements Initializable {
                 vboxmini.getChildren().addAll();
                 
                 // Los botones para abrir con la ventana Exportar resultados y ver detalleestan aqui:--------------------------------
-                Button btnResultadoGrupo = new Button();
-                btnResultadoGrupo.setText("Exportar Resultados del grupo.");
-                Button btnDetalle = new Button();
-                btnDetalle.setText("Ver Detalle del grupo");
+                Button btnResultadoGrupo = new Button("Exportar Resultados del grupo.");
+                Button btnDetalle = new Button("Ver Detalle del grupo");
                 //----------------------------------------------------------------------------------------------------------------------
                 vbox1.getChildren().addAll(new Label("Resultado del partido"), dia, hboxmini, btnResultadoGrupo, btnDetalle);
                 vbox1.setSpacing(10);
