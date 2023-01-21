@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +32,7 @@ import javafx.scene.layout.VBox;
  */
 public class VentanaController implements Initializable {
 
+    private ArrayList<worldCup> listaWorldCup;
     /**
      * Initializes the controller class.
      */
@@ -40,6 +42,7 @@ public class VentanaController implements Initializable {
         Principal.cargarimagen (ivinicio,Principal.pathImg+"fifaBrasil.jpg", 400, 258, false, false);
         Principal.cargarimagen (ivcopa,Principal.pathImg+"Brazil2014.png", 88, 100, false, false);
         labeltitulo.setId("texto-titulo");
+        listaWorldCup = worldCup.generarLista();
     }  
     
     @FXML
@@ -63,17 +66,11 @@ public class VentanaController implements Initializable {
         root.getChildren().clear();
         labeltitulo.setText("Consulta Histórica de copas\n               Mundiales");
         ComboBox cbanio = new ComboBox();
-        try(BufferedReader lector = new BufferedReader(new FileReader(Principal.pathArc+"WorldCups.csv"))){
-            lector.readLine();
-            String linea;
-            String[] contenido;
-            while((linea = lector.readLine()) != null){
-                contenido = linea.split(",");
-                cbanio.getItems().addAll(contenido[0]);
-            }
-        }catch(IOException ioe){
-            System.out.println("No se pudo leer el archivo");
+        
+        for(worldCup dato: listaWorldCup){
+            cbanio.getItems().addAll(dato.getYear());
         }
+        
         Button btnConsulta = new Button("Consultar");
         HBox hbox0 = new HBox();
         VBox vbox0 = new VBox();
@@ -109,28 +106,18 @@ public class VentanaController implements Initializable {
             ImageView ivbandera3 = new ImageView();
             ImageView ivbandera4 = new ImageView();
         
-            try(BufferedReader lector = new BufferedReader(new FileReader(Principal.pathArc+"WorldCups.csv"))){
-                lector.readLine();
-                String linea;
-                String[] contenido;
-                while((linea = lector.readLine()) != null){
-                    contenido = linea.split(",");
-                
-                    if(anio.equals(contenido[0])){
-                        Principal.cargarimagen(ivbandera1, Principal.pathBandera+contenido[2]+".png", 18, 14, false, false);
-                        hbGanador.getChildren().addAll(ivbandera1, new Label(contenido[2]+"   "));
-                        Principal.cargarimagen(ivbandera2, Principal.pathBandera+contenido[3]+".png", 18, 14, false, false);
-                        hbSegundo.getChildren().addAll(ivbandera2, new Label(contenido[3]+"   "));
-                        Principal.cargarimagen(ivbandera3, Principal.pathBandera+contenido[4]+".png", 18, 14, false, false);
-                        hbTercero.getChildren().addAll(ivbandera3, new Label(contenido[4]+"   "));
-                        Principal.cargarimagen(ivbandera4, Principal.pathBandera+contenido[5]+".png", 18, 14, false, false);
-                        hbCuarto.getChildren().addAll(ivbandera4, new Label(contenido[5]+"   "));
-
-                        vbDatosGenerales.getChildren().addAll(new Label("\n  Datos generales\n\n  Goles Anotados: "+contenido[6]+"\n  Equipos: "+contenido[7]+"\n  Partidos Jugados: "+contenido[8]+"\n  Asistencia: "+contenido[9]));
-                    }
+            for(worldCup dato: listaWorldCup){
+                if(anio.equals(dato.getYear())){
+                    ivbandera1.setImage(dato.generarBandera(0));
+                    hbGanador.getChildren().addAll(ivbandera1, new Label(dato.getPaises().get(0)));
+                    ivbandera2.setImage(dato.generarBandera(1));
+                    hbSegundo.getChildren().addAll(ivbandera2, new Label(dato.getPaises().get(1)));
+                    ivbandera3.setImage(dato.generarBandera(2));
+                    hbTercero.getChildren().addAll(ivbandera3, new Label(dato.getPaises().get(2)));
+                    ivbandera4.setImage(dato.generarBandera(3));
+                    hbCuarto.getChildren().addAll(ivbandera4, new Label(dato.getPaises().get(3)));
+                    vbDatosGenerales.getChildren().addAll(new Label("\n  Datos generales\n\n  Goles Anotados: "+dato.getDatosNumericos().get(0)+"\n  Equipos: "+dato.getDatosNumericos().get(1)+"\n  Partidos Jugados: "+dato.getDatosNumericos().get(2)+"\n  Asistencia: "+dato.getDatosNumericos().get(3)));
                 }
-            }catch(IOException ioe){
-                System.out.println("No se pudo leer el archivo");
             }
 
             try(FileInputStream input = new FileInputStream(Principal.pathImg+"copa.png")){

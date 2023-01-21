@@ -79,14 +79,12 @@ public class ConsultaPartidoController implements Initializable {
             cbgrupo.setOnAction(g->cargarCB((String) cbgrupo.getValue(), cbequipo1, cbequipo2));
             
             hbox1.getChildren().addAll(new Label("Fase: "), cbfase, new Label("                "), new Label("Grupo: "), cbgrupo);
-            hbox1.setSpacing(10);
-            hbox1.setAlignment(Pos.CENTER);
+            setearEspacio(hbox1);
             hbox1.setPadding(new Insets(20, 10, 20, 10));
             vbox0.getChildren().add(hbox1);
             
             hbox2.getChildren().addAll(new Label("Equipo 1: "), cbequipo1, new Label("               vs               ") ,new Label("Equipo 2: "), cbequipo2);
-            hbox2.setSpacing(10);
-            hbox2.setAlignment(Pos.CENTER);
+            setearEspacio(hbox2);
             hbox2.setPadding(new Insets(0, 10, 20, 10));
             vbox0.getChildren().add(hbox2);
             
@@ -117,8 +115,7 @@ public class ConsultaPartidoController implements Initializable {
                 System.out.println("no se pudo leer");
             }
             hbox1.getChildren().addAll(new Label("Fase: "), cbfase);
-            hbox1.setSpacing(10);
-            hbox1.setAlignment(Pos.CENTER);
+            setearEspacio(hbox1);
             hbox1.setPadding(new Insets(20, 10, 20, 10));
             vbox0.getChildren().add(hbox1);
             vbox0.getChildren().addAll(new Label("Los equipos que llegaron a esta fase fueron:"));
@@ -231,8 +228,7 @@ public class ConsultaPartidoController implements Initializable {
                         Principal.cargarimagen (bandera2, Principal.pathBandera+orden.get(1)+".png", 100, 65, false, false);
                         vboxmini.getChildren().addAll(new Label(contenido[1]), new Label("GRUPO "+grupo), new Label(contenido[3]), new Label(contenido[4]));
                         hboxmini.getChildren().addAll(vboxmini, bandera1, new Label(orden.get(0)), new Label("  Final del partido:  \n           " + contenido[6] + " - " + contenido[7]), new Label(orden.get(1)), bandera2);
-                        hboxmini.setSpacing(10);
-                        hboxmini.setAlignment(Pos.CENTER);
+                        setearEspacio(hboxmini);
                         dia.setText(diaPartido(contenido[1].split(" ")[0]));
                     }
                 }    
@@ -247,8 +243,7 @@ public class ConsultaPartidoController implements Initializable {
                 Button btnDetalle = new Button("Ver Detalle del grupo");
                 //----------------------------------------------------------------------------------------------------------------------
                 vbox1.getChildren().addAll(new Label("Resultado del partido"), dia, hboxmini, btnResultadoGrupo, btnDetalle);
-                vbox1.setSpacing(10);
-                vbox1.setAlignment(Pos.CENTER);
+                setearEspacio(vbox1);
                 root.getChildren().add(vbox1);
             }
         }
@@ -259,5 +254,15 @@ public class ConsultaPartidoController implements Initializable {
         int numero = fecha.getDayOfWeek().getValue();
         String[] dias = {"Lunes ","Martes ","Miercoles ","Jueves ","Viernes ","Sabado ","Domingo "};
         return dias[numero-1] + numDia + " de junio";
+    }
+    
+    private void setearEspacio(VBox vbox){
+        vbox.setSpacing(10);
+        vbox.setAlignment(Pos.CENTER);
+    }
+    
+    private void setearEspacio(HBox hbox){
+        hbox.setSpacing(10);
+        hbox.setAlignment(Pos.CENTER);
     }
 }
