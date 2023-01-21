@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -253,34 +254,10 @@ public class ConsultaPartidoController implements Initializable {
         }
     }
     
-    public String diaPartido(String numDia){            
-        switch (numDia) {
-            case "16":
-            case "23":
-                return "Lunes " + numDia + " de junio";
-            case "17":
-            case "24":
-                return "Martes " + numDia + " de junio";
-            case "18":
-            case "25":
-                return "Miercoles " + numDia + " de junio";
-            case "12":
-            case "19":
-            case "26":
-                return "Jueves " + numDia + " de junio";
-            case "13":
-            case "20":
-                return "Viernes " + numDia + " de junio";
-            case "14":
-            case "21":
-                return "Sabado " + numDia + " de junio";
-            case "15":
-            case "22":
-                return "Domingo " + numDia + " de junio";
-            default:
-                break;
-        }
-        
-        return "";
+    public String diaPartido(String numDia){
+        LocalDate fecha = LocalDate.of(2014, 6, Integer.parseInt(numDia));
+        int numero = fecha.getDayOfWeek().getValue();
+        String[] dias = {"Lunes ","Martes ","Miercoles ","Jueves ","Viernes ","Sabado ","Domingo "};
+        return dias[numero-1] + numDia + " de junio";
     }
 }
